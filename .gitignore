@@ -1,0 +1,9 @@
+.DS_Store
+**/.DS_Store
+.ipynb_checkpoints/*
+lightning_logs/*
+.pytest_cache/*
+**/__pycache__/*
+slides/*
+**/.svs
+embeddings/*
