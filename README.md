@@ -1,0 +1,2 @@
+# LocalizationAwareCNN
+research idea
