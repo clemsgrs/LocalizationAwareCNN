@@ -1,4 +1,4 @@
 gdown 1LykaOeTEAVm3YAz6pA5FeQI10tHCdexF
-unzip train.zip -d "data/."
+unzip -qq train.zip -d "data/"
 rm train.zip
-rm -r __MACOSX
+rm -r data/__MACOSX
