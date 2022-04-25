@@ -1,0 +1,8 @@
+opencv-python
+pandas
+sklearn
+torch
+torchvision
+tqdm>=4.57.0
+timm
+openslide-python
