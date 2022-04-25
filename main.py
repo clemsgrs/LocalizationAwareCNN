@@ -12,9 +12,9 @@ if __name__ == '__main__':
     
     tile_size = 224
     filter_tissue = True
-    embedding_dir = Path('./embeddings')
+    embedding_dir = Path('./embeddings/train')
     
-    slide_dir = Path('./slides')
+    slide_dir = Path('./slides/train')
     slide_df = slide_dataframe(slide_dir)
     # slide_df.to_csv('slide.csv', index=False)
     print(f'#slides: {len(slide_df)}')
