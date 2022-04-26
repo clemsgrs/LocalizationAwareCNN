@@ -9,10 +9,10 @@ from pathlib import Path
 from core.data.extract_tissue import make_sample_grid
 
 
-def slide_dataframe(slide_dir: Path, fmt: str = 'svs'):
+def slide_dataframe(data_dir: Path, fmt: str = 'svs'):
     slide_dimensions, slide_ids = [], []
     slide_paths, lesion_types, lesion_subtypes = [], [], []
-    lesion_types_dir = [sd for sd in slide_dir.iterdir() if sd.is_dir()]
+    lesion_types_dir = [sd for sd in data_dir.iterdir() if sd.is_dir()]
     for lt in lesion_types_dir:
         lesion_subtypes_dir = [sd for sd in lt.iterdir() if sd.is_dir()]
         for lst in lesion_subtypes_dir:

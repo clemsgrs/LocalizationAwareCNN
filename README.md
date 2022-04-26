@@ -10,6 +10,7 @@ To run training and testing, just download the `train_test.ipynb` notebook and o
 - [ ] deal with tissue filter: 1) check x,y coordinates are not inverted ; 2) check coordinates have not been translated by a given (tx, ty) vector (i.e. first tissue tile coords are (0,0))
 - [ ] create data downloading script using Google Drive link
 - [ ] maybe restrict myself to ROI which might all be the same size (+full of tisse +smaller size dataset)
+- [ ] how about pre-training on ROIs, then use pre-trained weights to embed WSIs' tiles? This is because how the slide-level label was acquired (it's derived as the most severe cancerous lesion detected within the slide)
 
 # Tests:
 
