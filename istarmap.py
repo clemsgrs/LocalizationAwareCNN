@@ -19,7 +19,9 @@ def istarmap(self, func, iterable, chunksize=1):
         result = mpp.IMapIterator(self._cache)
 
     else:
+
         self._check_running()
+        
         if chunksize < 1:
             raise ValueError(
                 "Chunksize must be 1+, not {0:n}".format(
