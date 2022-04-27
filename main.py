@@ -86,7 +86,7 @@ def f(model, slide_fp, coord, tile_size: int = 224):
 
 if __name__ == '__main__':
 
-    N = 500
+    N = 200
     tile_size = 224
     filter_tissue = True
     embedding_dir = Path('./embeddings/train')
@@ -128,7 +128,7 @@ if __name__ == '__main__':
     # print(f'Single processing took {(time.time() - sp_start_time)}')
         
     mp_start_time = time.time()
-    with mp.Pool(4) as p:
+    with mp.Pool(2) as p:
         slide_id = 'BRACS_3317'
         sub_df = tiles_df[tiles_df['slide_id'] == slide_id]
         slide_fp = sub_df.slide_path.iloc[0]

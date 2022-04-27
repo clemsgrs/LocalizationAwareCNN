@@ -6,7 +6,7 @@ def istarmap(self, func, iterable, chunksize=1):
     """
     starmap-version of imap
     """
-    a = sys.version_info[0]
+    a = sys.version_info[0] + sys.version_info[1]/10
     if a < 3.8:
 
         if self._state != mpp.RUN:
@@ -21,7 +21,7 @@ def istarmap(self, func, iterable, chunksize=1):
     else:
 
         self._check_running()
-        
+
         if chunksize < 1:
             raise ValueError(
                 "Chunksize must be 1+, not {0:n}".format(
