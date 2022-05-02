@@ -39,9 +39,9 @@ def slide_dataframe(data_dir: Path, fmt: str = 'svs'):
 
 def get_valid_tiles(row: pd.Series, tile_size: int = 224, filter_tissue: bool = False):
     if isinstance(row.slide_dimension, tuple):
-        max_y, max_x = row.slide_dimension
+        max_x, max_y = row.slide_dimension
     elif isinstance(row.slide_dimension, str):
-        max_y, max_x = list(map(int, row.slide_dimension[1:-1].split(',')))
+        max_x, max_y = list(map(int, row.slide_dimension[1:-1].split(',')))
     # get coords of tissue patches in whole slide images using Otsu algorithm
     if filter_tissue:
         slide = openslide.OpenSlide(row.slide_path)
@@ -49,9 +49,9 @@ def get_valid_tiles(row: pd.Series, tile_size: int = 224, filter_tissue: bool = 
     # get coordinates of all patches in whole slide images
     else:
         coords = []
-        for y in range(0, max_y, tile_size):
-            for x in range(0, max_x, tile_size):
-                coords.append((y,x))
+        for x in range(0, max_x, tile_size):
+            for y in range(0, max_y, tile_size):
+                coords.append((x,y))
     return coords
 
 
