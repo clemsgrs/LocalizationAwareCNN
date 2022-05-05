@@ -15,3 +15,7 @@ rm bracs-train-small.zip
 # kaggle datasets download -d clemsy/bracs-train-small-tensors-standardised
 # unzip -qq bracs-train-small-tensors-standardised.zip -d "data/"
 # rm bracs-train-small-tensors-standardised.zip
+
+# kaggle datasets download -d clemsy/bracs-val-small
+# unzip -qq bracs-val-small.zip -d "data/"
+# rm bracs-val-small.zip

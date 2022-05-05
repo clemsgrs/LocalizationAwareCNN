@@ -1,3 +1,4 @@
+import os
 import timm
 import torch
 import pickle
@@ -80,3 +81,7 @@ def load_slide_tensor(filepath):
     with open(filepath, 'rb') as f:
         t = pickle.load(f)
     return t
+
+
+def remove_slide_file(filepath):
+  os.remove(filepath)
