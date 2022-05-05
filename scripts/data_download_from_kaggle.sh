@@ -7,3 +7,11 @@ chmod 600 ~/.kaggle/kaggle.json
 kaggle datasets download -d clemsy/bracs-train-small
 unzip -qq bracs-train-small.zip -d "data/"
 rm bracs-train-small.zip
+
+# kaggle datasets download -d clemsy/bracs-train-small-tensors
+# unzip -qq bracs-train-small-tensors.zip -d "data/"
+# rm bracs-train-small-tensors.zip
+
+# kaggle datasets download -d clemsy/bracs-train-small-tensors-standardised
+# unzip -qq bracs-train-small-tensors-standardised.zip -d "data/"
+# rm bracs-train-small-tensors-standardised.zip

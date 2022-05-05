@@ -12,7 +12,7 @@ from itertools import repeat
 from pathlib import Path
 from torchvision import transforms
 
-from core.data.utils import slide_dataframe, tiles_dataframe, generate_embeddings, save_slide_tensor
+from core.data.utils import slide_dataframe, tiles_dataframe, save_slide_tensor
 
 
 def generate_embedding(model, slide, coord, tile_size: int = 224):
@@ -30,7 +30,7 @@ if __name__ == '__main__':
     N = 200
     tile_size = 224
     filter_tissue = True
-    embedding_dir = Path('./embeddings/train')
+    tensor_dir = Path('./tensors/train')
 
     data_dir = Path('/Users/clementgrisi/Code/datasets/bracs/train')
     slide_df = slide_dataframe(data_dir)
@@ -64,7 +64,7 @@ if __name__ == '__main__':
         delta_x = max_x - min_x
         delta_y = max_y - min_y
         M = max(delta_x,delta_y)
-        m = int(np.ceil(M/224))
+        m = int(np.ceil(M/tile_size))
 
         if m < min_size:
             m = min_size
@@ -86,6 +86,10 @@ if __name__ == '__main__':
                 sparse_tensor[i,j] = e.cpu()
 
             # save (sparse) tensor to disk
-            save_path = Path(embedding_dir, f'{slide_id}.pkl')
+            lesion_type = gdf.lesion_type.iloc[0]
+            lesion_subtype = gdf.lesion_subtype.iloc[0]
+            save_path = Path(tensor_dir, lesion_type, lesion_subtype, f'{slide_id}.pkl')
+            save_dir = save_path.parents[0]
+            save_dir.mkdir(exist_ok=True, parents=True)
             save_slide_tensor(save_path, sparse_tensor)
         
