@@ -8,6 +8,10 @@ kaggle datasets download -d clemsy/bracs-train-small
 unzip -qq bracs-train-small.zip -d "data/"
 rm bracs-train-small.zip
 
+# kaggle datasets download -d clemsy/bracs-train-small-supplementary
+# unzip -qq bracs-train-small-supplementary.zip -d "data/"
+# rm bracs-train-small-supplementary.zip
+
 # kaggle datasets download -d clemsy/bracs-train-small-tensors
 # unzip -qq bracs-train-small-tensors.zip -d "data/"
 # rm bracs-train-small-tensors.zip
