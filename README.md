@@ -11,6 +11,7 @@ To run training and testing, just download the `train_test.ipynb` notebook and o
 - [ ] create data downloading script using Google Drive link
 - [ ] maybe restrict myself to ROI which might all be the same size (+full of tisse +smaller size dataset)
 - [ ] how about pre-training on ROIs, then use pre-trained weights to embed WSIs' tiles? This is because how the slide-level label was acquired (it's derived as the most severe cancerous lesion detected within the slide)
+- [ ] re-read TransMIL (could train tile embedder using MIL & sparse tensor agg end2end w/ sparse backprop to save memory)
 
 # Tests:
 
