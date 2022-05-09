@@ -6,3 +6,4 @@ torchvision
 tqdm>=4.57.0
 timm
 gdown
+kaggle
