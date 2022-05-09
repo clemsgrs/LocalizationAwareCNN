@@ -33,19 +33,13 @@ parser.add_argument('--config', type=str, default='config/default.json', help='c
 args = parser.parse_args()
 params = open_config_file(args.config)
 
-train_df = pd.read_csv('train_slides.csv')
-train_embedding_dir = Path(params.embedding_dir, 'train')
-train_dataset = SparseTensorDataset(train_df, train_embedding_dir, LABEL_MAPPING)
+train_tensor_dir = Path(params.tensor_dir, 'train')
+train_dataset = SparseTensorDataset(train_tensor_dir, LABEL_MAPPING)
 
-val_df = pd.read_csv('val_slides.csv')
-val_embedding_dir = Path(params.embedding_dir, 'val')
-val_dataset = SparseTensorDataset(val_df, val_embedding_dir, LABEL_MAPPING, training=False)
-val_loader = torch.utils.data.DataLoader(
-    val_dataset,
-    batch_size=params.batch_size,
-)
+val_tensor_dir = Path(params.tensor_dir, 'val')
+val_dataset = SparseTensorDataset(val_tensor_dir, LABEL_MAPPING, training=False)
 
-model = timm.create_model(params.model, pretrained=True, num_classes=params.num_classes)
+model = timm.create_model(params.model, pretrained=True, num_classes=params.num_classes, in_chans=params.tensor_depth)
 
 optimizer = optim.Adam(model.parameters(), lr=params.lr)
 if params.lr_scheduler:

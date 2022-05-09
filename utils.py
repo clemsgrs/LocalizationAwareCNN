@@ -1,5 +1,6 @@
 import json
 import torch
+import numpy as np
 from tqdm import tqdm
 from sklearn import metrics
 
@@ -25,7 +26,7 @@ def epoch_time(start_time, end_time):
 
 
 def get_metrics(probs, labels, threshold: float = 0.5):
-    probs, labels = probs.numpy(), labels.numpy()
+    probs, labels = np.asarray(probs), np.asarray(labels)
     preds = probs > threshold
     acc = metrics.accuracy_score(labels, preds)
     auc = metrics.roc_auc_score(labels, probs)
@@ -42,6 +43,7 @@ def run_training(epoch, model, train_dataset, optimizer, criterion, params, thre
     epoch_loss = 0
     probs = []
     labels = []
+    idxs = []
 
     train_loader = torch.utils.data.DataLoader(
         train_dataset,
@@ -58,7 +60,7 @@ def run_training(epoch, model, train_dataset, optimizer, criterion, params, thre
         for i, batch in enumerate(t):
 
             optimizer.zero_grad()
-            _, sparse_tensor, label = batch
+            idx, sparse_tensor, label = batch
             sparse_tensor, label = sparse_tensor.cuda(), label.cuda()
             logits = model(sparse_tensor)
             loss = criterion(logits, label.float())
@@ -68,9 +70,12 @@ def run_training(epoch, model, train_dataset, optimizer, criterion, params, thre
             prob = torch.sigmoid(logits)
             probs.extend(prob[:,0].clone().tolist())
             labels.extend(label.clone().tolist())
+            idxs.extend(list(idx))
 
             epoch_loss += loss.item()
         
+        train_dataset.df.loc[idxs, 'training_prob'] = probs
+
         metrics = get_metrics(probs, labels, threshold)
         avg_loss = epoch_loss / len(train_loader)
         
@@ -83,6 +88,7 @@ def run_validation(epoch, model, val_dataset, criterion, params, threshold=0.5):
     epoch_loss = 0
     probs = []
     labels = []
+    idxs = []
 
     val_loader = torch.utils.data.DataLoader(
         val_dataset,
@@ -100,7 +106,7 @@ def run_validation(epoch, model, val_dataset, criterion, params, threshold=0.5):
             
             for i, batch in enumerate(t):
 
-                _, sparse_tensor, label = batch
+                idx, sparse_tensor, label = batch
                 sparse_tensor, label = sparse_tensor.cuda(), label.cuda()
                 logits = model(sparse_tensor)
                 loss = criterion(logits, label.float())
@@ -108,9 +114,12 @@ def run_validation(epoch, model, val_dataset, criterion, params, threshold=0.5):
                 prob = torch.sigmoid(logits)
                 probs.extend(prob[:,0].clone().tolist())
                 labels.extend(label.clone().tolist())
+                idxs.extend(list(idx))
 
                 epoch_loss += loss.item()
         
+        val_dataset.df.loc[idxs, 'validation_prob'] = probs
+
         metrics = get_metrics(probs, labels, threshold)
         avg_loss = epoch_loss / len(val_loader)
         

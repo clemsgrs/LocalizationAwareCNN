@@ -77,7 +77,7 @@ def save_slide_tensor(filepath, t):
         pickle.dump(t, f)
 
 
-def load_slide_tensor(filepath):
+def open_tensor(filepath):
     with open(filepath, 'rb') as f:
         t = pickle.load(f)
     return t
@@ -85,3 +85,41 @@ def load_slide_tensor(filepath):
 
 def remove_slide_file(filepath):
   os.remove(filepath)
+
+
+def generate_dataframe(tensor_dir: Path, parse_dim: bool = False, fmt: str = 'pkl'):
+    slide_ids = []
+    tensor_paths, tensor_dimensions = [], []
+    lesion_types, lesion_subtypes = [], []
+    lesion_types_dir = [sd for sd in tensor_dir.iterdir() if sd.is_dir()]
+    for lt in lesion_types_dir:
+        lesion_subtypes_dir = [sd for sd in lt.iterdir() if sd.is_dir()]
+        for lst in lesion_subtypes_dir:
+            tensor_filenames = list(Path(lst).glob(f'*.{fmt}'))
+            for fp in tensor_filenames:
+                tensor_paths.append(str(fp))
+                if parse_dim: 
+                    t = open_tensor(fp)
+                    td = t.shape
+                    tensor_dimensions.append(td)
+                slide_id = Path(fp).stem
+                slide_ids.append(slide_id)
+                lesion_types.append(lt.stem)
+                lesion_subtypes.append(lst.stem)
+    if parse_dim:
+        tensor_dict = {
+            'slide_id': slide_ids,
+            'tensor_path': tensor_paths,
+            'tensor_dimension': tensor_dimensions,
+            'lesion_type': lesion_types,
+            'lesion_subtype': lesion_subtypes
+        }
+    else:
+        tensor_dict = {
+            'slide_id': slide_ids,
+            'tensor_path': tensor_paths,
+            'lesion_type': lesion_types,
+            'lesion_subtype': lesion_subtypes
+        }
+    df = pd.DataFrame(tensor_dict)
+    return df
