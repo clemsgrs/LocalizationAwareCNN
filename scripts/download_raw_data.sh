@@ -1,5 +1,3 @@
-pip install kaggle
-
 mkdir ~/.kaggle
 mv "$1" ~/.kaggle/
 chmod 600 ~/.kaggle/kaggle.json
