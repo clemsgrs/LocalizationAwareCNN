@@ -48,7 +48,7 @@ def run_training(epoch, model, train_dataset, optimizer, criterion, params, thre
     train_loader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=params.batch_size,
-        shuffle=False
+        shuffle=True
     )
 
     with tqdm(train_loader,

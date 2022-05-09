@@ -13,13 +13,11 @@ class SparseTensorDataset(torch.utils.data.Dataset):
         self,
         tensor_dir: Path,
         LABEL_MAPPING: Dict[str, int],
-        training: bool = True,
         transform: Callable = None,
         parse_dim: bool = False,
         fmt: str = 'pkl'
     ):
         self.tensor_dir = tensor_dir
-        self.training = training
         self.transform = transform
         self.fmt = fmt
 
@@ -32,7 +30,7 @@ class SparseTensorDataset(torch.utils.data.Dataset):
         t = open_tensor(tensor_fp)
         if self.transform:
             t = self.transform(t)
-        label = np.array([row.label]).astype(float) if self.training else np.array([-1])
+        label = np.array([row.label]).astype(float)
         return index, t, label
 
     def __len__(self):

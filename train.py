@@ -37,7 +37,7 @@ train_tensor_dir = Path(params.tensor_dir, 'train')
 train_dataset = SparseTensorDataset(train_tensor_dir, LABEL_MAPPING)
 
 val_tensor_dir = Path(params.tensor_dir, 'val')
-val_dataset = SparseTensorDataset(val_tensor_dir, LABEL_MAPPING, training=False)
+val_dataset = SparseTensorDataset(val_tensor_dir, LABEL_MAPPING)
 
 model = timm.create_model(params.model, pretrained=True, num_classes=params.num_classes, in_chans=params.tensor_depth)
 
